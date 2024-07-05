@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique @db.VarChar(100)
+  password  String   @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  role      ROLE
+  items     Item[]   @relation(name: "author")
+  carts     Cart[]   @relation(name: "buyer")
+
+  @@map("users")
+}
+
+model Item {
+  id          String   @id @default(uuid())
+  name        String?  @db.VarChar(255)
+  description String?  @db.Text
+  category    Category @default(OTHER)
+  stock       Int      @db.UnsignedInt
+  totalItem   Int      @db.UnsignedInt
+  thumbnail   String?  @db.VarChar(255)
+  price       BigInt   @default(0) @db.UnsignedBigInt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  carts       Cart[]
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "author")
+  authorId    String
+
+  @@map("items")
+}
+
+model Cart {
+  id                 String         @id @default(uuid())
+  quantity           Int            @db.UnsignedInt
+  item               Item           @relation(fields: [itemId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  itemId             String
+  buyer              User           @relation(fields: [buyerId], references: [id], onDelete: Cascade, onUpdate: Cascade, name: "buyer")
+  buyerId            String
+  order              Order?         @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orderId            String?
+  status             PAYMENT_STATUS @default(INPROCESS)
+  orderStatusUpdated BigInt?        @default(0) @db.UnsignedBigInt
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @default(now()) @updatedAt
+
+  @@map("carts")
+}
+
+model Order {
+  id                 String   @id @default(uuid())
+  desription         String?  @db.Text
+  status             Boolean  @default(false)
+  orderStatusUpdated BigInt?  @default(0) @db.UnsignedBigInt
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @default(now()) @updatedAt
+  carts              Cart[]
+
+  @@map("orders")
+}
+
+enum ROLE {
+  SELLER
+  BUYER
+}
+
+enum Category {
+  CLOTHES
+  ACCESSORIES
+  OTHER
+}
+
+enum PAYMENT_STATUS {
+  INPROCESS
+  UNPAID
+  PAID
+}
