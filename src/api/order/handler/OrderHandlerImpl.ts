@@ -39,16 +39,15 @@ export class OrderHandlerImpl extends OrderHandler {
         payload,
       });
 
-      await this.orderService.updateOrderStatusById(
-        id,
-        payload.isValid,
-        userId
-      );
+      await this.orderService.updateOrderStatusById(id, payload.isValid);
 
       return res
         .status(201)
         .json(
-          createResponse(RESPONSE_MESSAGE.SUCCESS, "update order status successfully")
+          createResponse(
+            RESPONSE_MESSAGE.SUCCESS,
+            "update order status successfully"
+          )
         );
     } catch (error) {
       return next(error);

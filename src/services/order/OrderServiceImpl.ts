@@ -6,15 +6,34 @@ import { IPostOrderPayload } from "../../utils/interfaces/request/IPostOrderPayl
 import { OrderService } from "./OrderService";
 
 export class OrderServiceImpl extends OrderService {
-  async updateOrderStatusById(
-    id: string,
-    isValid: boolean,
-    userId: string
-  ): Promise<void> {
-    // const order = this.orderRepository.getOrderById(id);
-    // if (!order) {
-    //   throw new NotFoundError(ERRORCODE.COMMON_NOT_FOUND, "order's not found")
-    // }
+  async getOrders(): Promise<OrderEntity[]> {
+    return this.orderRepository.getOrders();
+  }
+
+  async getOrdersByBuyerId(userId: string): Promise<OrderEntity[]> {
+    const buyer = await this.userRepository.getUserById(userId);
+
+    if (!buyer) {
+      throw new NotFoundError(
+        ERRORCODE.USER_NOT_FOUND_ERROR,
+        "user's not found"
+      );
+    }
+
+    return this.orderRepository.getOrdersByBuyerId(userId);
+  }
+
+  async updateOrderStatusById(id: string, isValid: boolean): Promise<void> {
+    const order = await this.orderRepository.getOrderById(id);
+    if (!order) {
+      throw new NotFoundError(ERRORCODE.COMMON_NOT_FOUND, "order's not found");
+    }
+
+    await this.orderItemStockUpdateRepository.updateOrderAndItemStock(
+      id,
+      isValid,
+      order.carts ?? []
+    );
   }
 
   async addOrder(payload: IPostOrderPayload, userId: string): Promise<void> {
@@ -40,6 +59,7 @@ export class OrderServiceImpl extends OrderService {
       orderStatusUpdated: Math.floor(new Date().getTime() / 1000),
       description: payload.description,
       cartIds: payload.carts,
+      buyerId: userId,
     });
 
     await this.orderItemStockUpdateRepository.insertOrderAndUpdateItemStock(

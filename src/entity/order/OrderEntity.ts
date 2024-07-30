@@ -1,20 +1,26 @@
+import { PAYMENT_STATUS } from "@prisma/client";
 import { CartEntity } from "../cart/CartEntity";
+import { BuyerEntity } from "../user/buyer/BuyerEntity";
 
 export class OrderEntity {
   private _id?: string | undefined;
   private _description?: string | undefined;
-  private _status?: boolean | undefined;
+  private _status?: PAYMENT_STATUS | undefined;
   private _orderStatusUpdated?: number | undefined;
   private _carts?: CartEntity[] | undefined;
   private _cartIds?: string[] | undefined;
+  private _buyer?: BuyerEntity | undefined;
+  private _buyerId?: string | undefined;
 
   constructor(args: {
     id?: string;
     description?: string;
-    status?: boolean;
+    status?: PAYMENT_STATUS;
     orderStatusUpdated?: number;
     carts?: CartEntity[];
     cartIds?: string[];
+    buyer?: BuyerEntity;
+    buyerId?: string;
   }) {
     this.id = args.id;
     this.description = args.description;
@@ -22,6 +28,22 @@ export class OrderEntity {
     this.orderStatusUpdated = args.orderStatusUpdated;
     this.carts = args.carts;
     this.cartIds = args.cartIds;
+    this.buyer = args.buyer;
+    this.buyerId = args.buyerId;
+  }
+
+  public get buyer(): BuyerEntity | undefined {
+    return this._buyer;
+  }
+  public set buyer(value: BuyerEntity | undefined) {
+    this._buyer = value;
+  }
+
+  public get buyerId(): string | undefined {
+    return this._buyerId;
+  }
+  public set buyerId(value: string | undefined) {
+    this._buyerId = value;
   }
 
   public get cartIds(): string[] | undefined {
@@ -45,10 +67,10 @@ export class OrderEntity {
     this._orderStatusUpdated = value;
   }
 
-  public get status(): boolean | undefined {
+  public get status(): PAYMENT_STATUS | undefined {
     return this._status;
   }
-  public set status(value: boolean | undefined) {
+  public set status(value: PAYMENT_STATUS | undefined) {
     this._status = value;
   }
 

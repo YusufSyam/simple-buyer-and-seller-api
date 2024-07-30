@@ -25,6 +25,13 @@ export class BuyerRouterImpl extends BaseRouter {
         this.handler.getBuyerCarts
       );
 
+    this.router
+      .route(this.path + "/orders")
+      .get(
+        this.authorizationMiddlware.authorize([ROLE.BUYER]),
+        this.handler.getBuyerOrders
+      );
+
     return this.router;
   }
 }

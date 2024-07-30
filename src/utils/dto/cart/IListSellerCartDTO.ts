@@ -5,7 +5,7 @@ interface IListCartDTO {
   cartId: string;
   quantity: number;
   buyerName: string;
-  status: PAYMENT_STATUS;
+  authorPhoneNumber: string;
   item: {
     name: string;
     id: string;
@@ -18,6 +18,7 @@ interface IListCartDTO {
 export const ListSellerCartDTO = (cart: CartEntity) => {
   return {
     buyerName: cart.buyer?.name,
+    authorPhoneNumber: cart.item?.author?.phoneNumber,
     cartId: cart.id,
     item: {
       category: cart.item?.category,
@@ -26,7 +27,6 @@ export const ListSellerCartDTO = (cart: CartEntity) => {
       price: cart.item?.price,
       thumbnail: cart.item?.thumbnail,
     },
-    status: cart.status,
     quantity: cart.quantity,
   } as IListCartDTO;
 };

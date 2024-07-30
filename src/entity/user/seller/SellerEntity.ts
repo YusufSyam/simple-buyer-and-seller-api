@@ -7,9 +7,18 @@ export class SellerEntity extends UserEntity {
 
   constructor(
     name: string,
-    args?: { password?: string; id?: string; items?: ItemEntity[] }
+    args?: {
+      password?: string;
+      id?: string;
+      items?: ItemEntity[];
+      phoneNumber?: string;
+    }
   ) {
-    super(name, ROLE.SELLER, { password: args?.password, id: args?.id });
+    super(name, ROLE.SELLER, {
+      password: args?.password,
+      id: args?.id,
+      phoneNumber: args?.phoneNumber,
+    });
     this.items = args?.items;
   }
 

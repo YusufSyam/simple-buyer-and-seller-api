@@ -41,6 +41,7 @@ export class UserServiceImpl extends UserService {
 
     const newUser = new UserEntity(payload.username, payload.role, {
       password,
+      phoneNumber: payload.phoneNumber,
     });
 
     await this.userRepository.addUser(newUser);

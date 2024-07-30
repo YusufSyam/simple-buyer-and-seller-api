@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 export abstract class OrderHandler {
   constructor() {
     this.postOrder = this.postOrder.bind(this);
+    this.putOrderStatus = this.putOrderStatus.bind(this);
   }
   abstract putOrderStatus(
     req: Request,

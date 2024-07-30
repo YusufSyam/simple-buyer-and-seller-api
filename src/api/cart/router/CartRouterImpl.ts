@@ -30,7 +30,7 @@ export class CartRouterImpl extends BaseRouter {
       .route(this.path + "/:id")
       .put(
         this.authorizationMiddleware.authorize([ROLE.SELLER]),
-        this.handler.putCartOrderStatus
+        this.handler.putCartOrderStatus // ! unused
       )
       .delete(
         this.authorizationMiddleware.authorize([ROLE.BUYER]),

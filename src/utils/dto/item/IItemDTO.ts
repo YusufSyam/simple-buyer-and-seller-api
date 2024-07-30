@@ -14,6 +14,7 @@ interface IItemDTO {
   author: {
     id: string;
     username: string;
+    phoneNumber: string;
   };
 }
 
@@ -35,6 +36,7 @@ export const ItemDTO = (item: ItemEntity) => {
     author: {
       id: item.author?.id,
       username: item.author?.name,
+      phoneNumber: item.author?.phoneNumber,
     },
     thumbnail,
   } as IItemDTO;

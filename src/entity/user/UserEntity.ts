@@ -4,17 +4,26 @@ export class UserEntity {
   private _name!: string;
   private _password?: string | undefined;
   private _id?: string | undefined;
+  private _phoneNumber?: string | undefined;
   private _role!: ROLE;
 
   constructor(
     name: string,
     role: ROLE,
-    args?: { password?: string; id?: string }
+    args?: { password?: string; id?: string; phoneNumber?: string }
   ) {
     this.id = args?.id;
     this.name = name;
     this.password = args?.password;
     this.role = role;
+    this.phoneNumber = args?.phoneNumber;
+  }
+
+  public get phoneNumber(): string | undefined {
+    return this._phoneNumber;
+  }
+  public set phoneNumber(value: string | undefined) {
+    this._phoneNumber = value;
   }
 
   public get role(): ROLE {

@@ -7,9 +7,18 @@ export class BuyerEntity extends UserEntity {
 
   constructor(
     name: string,
-    args?: { password?: string; id?: string; carts?: CartEntity[] }
+    args?: {
+      password?: string;
+      id?: string;
+      carts?: CartEntity[];
+      phoneNumber?: string;
+    }
   ) {
-    super(name, ROLE.BUYER, { password: args?.password, id: args?.id });
+    super(name, ROLE.BUYER, {
+      password: args?.password,
+      id: args?.id,
+      phoneNumber: args?.phoneNumber,
+    });
     this.carts = args?.carts;
   }
 

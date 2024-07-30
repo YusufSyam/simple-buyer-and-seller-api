@@ -41,6 +41,8 @@ export class CartPrismaRepositoryImpl extends CartRepository {
             author: {
               select: {
                 username: true,
+                id: true,
+                phoneNumber: true,
               },
             },
           },
@@ -61,7 +63,10 @@ export class CartPrismaRepositoryImpl extends CartRepository {
             id: c.itemId,
             price: Number(c.item.price),
             thumbnail: c.item.thumbnail ?? "",
-            author: new SellerEntity(c.item.author.username),
+            author: new SellerEntity(c.item.author.username, {
+              phoneNumber: c.item.author.phoneNumber ?? "",
+              id: c.item.author.id,
+            }),
           }),
           status: c.status,
           orderStatusUpdated: Number(c.orderStatusUpdated),
@@ -89,7 +94,7 @@ export class CartPrismaRepositoryImpl extends CartRepository {
             category: true,
             thumbnail: true,
             author: {
-              select: { username: true, id: true },
+              select: { username: true, id: true, phoneNumber: true },
             },
           },
         },
@@ -111,6 +116,7 @@ export class CartPrismaRepositoryImpl extends CartRepository {
         thumbnail: cart?.item.thumbnail ?? "",
         author: new SellerEntity(cart?.item.author.username!, {
           id: cart.item.author.id,
+          phoneNumber: cart.item.author.phoneNumber ?? "",
         }),
       }),
       buyer: new BuyerEntity(cart?.buyer?.username!, { id: cart?.buyer.id }),
@@ -136,6 +142,8 @@ export class CartPrismaRepositoryImpl extends CartRepository {
             author: {
               select: {
                 username: true,
+                id: true,
+                phoneNumber: true,
               },
             },
           },
@@ -156,7 +164,10 @@ export class CartPrismaRepositoryImpl extends CartRepository {
             id: c.itemId,
             price: Number(c.item.price),
             thumbnail: c.item.thumbnail ?? "",
-            author: new SellerEntity(c.item.author.username),
+            author: new SellerEntity(c.item.author.username, {
+              id: c.item.author.id,
+              phoneNumber: c.item.author.phoneNumber ?? "",
+            }),
           }),
           status: c.status,
           orderStatusUpdated: Number(c.orderStatusUpdated),

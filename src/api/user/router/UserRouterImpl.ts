@@ -40,22 +40,6 @@ export class UserRouterImpl extends BaseRouter {
         this.handler.postUserLogin
       );
 
-    // // * get users master
-    // this.router
-    //   .route(this.path + "/master")
-    //   .get(
-    //     this.authorizationMiddlware.authorize(),
-    //     this.handler.getUsersMaster
-    //   );
-
-    // // * delete user by id
-    // this.router
-    //   .route(this.path + "/:userId/master")
-    //   .delete(
-    //     this.authorizationMiddlware.authorize(),
-    //     this.handler.deleteUserMaster
-    //   );
-
     return this.router;
   }
 }

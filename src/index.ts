@@ -52,6 +52,7 @@ const orderService = new OrderServiceImpl({
   cartRepository,
   orderRepository,
   orderItemStockUpdateRepository,
+  userRepository,
 });
 // * validators
 const schemaValidator = new JoiValidatorImpl();
@@ -63,12 +64,12 @@ const userHandler = new UserHandlerImpl(
 const itemHandler = new ItemHandlerImpl({ itemService }, { schemaValidator });
 const fileHandler = new FileHandlerImpl();
 const cartHandler = new CartHandlerImpl({ cartService }, { schemaValidator });
-const buyerHandler = new BuyerHandlerImpl({ cartService });
+const buyerHandler = new BuyerHandlerImpl({ cartService, orderService });
 const orderHandler = new OrderHandlerImpl(
   { orderService },
   { schemaValidator }
 );
-const sellerHandler = new SellerHandlerImpl({ cartService });
+const sellerHandler = new SellerHandlerImpl({ cartService, orderService });
 // * misc
 const basicAuthMiddleware = new BasicAuthMiddleware(userService, hashImpl);
 const authorizationMiddleware = new AuthorizationBearer(userService);

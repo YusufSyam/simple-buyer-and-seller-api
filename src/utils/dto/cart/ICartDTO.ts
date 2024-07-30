@@ -5,8 +5,8 @@ interface ICartDTO {
   cartId: string;
   quantity: number;
   authorName: string;
+  authorPhoneNumber: string;
   buyerName: string;
-  status: PAYMENT_STATUS;
   item: {
     name: string;
     id: string;
@@ -22,6 +22,7 @@ export const CartDTO = (cart: CartEntity) => {
     authorName: cart.item?.author?.name,
     buyerName: cart.buyer?.name,
     cartId: cart.id,
+    authorPhoneNumber: cart.item?.author?.phoneNumber,
     item: {
       category: cart.item?.category,
       id: cart.itemId,
@@ -29,7 +30,6 @@ export const CartDTO = (cart: CartEntity) => {
       price: cart.item?.price,
       thumbnail: cart.item?.thumbnail,
     },
-    status: cart.status,
     quantity: cart.quantity,
     orderStatusUpdate: cart.orderStatusUpdated,
   } as ICartDTO;

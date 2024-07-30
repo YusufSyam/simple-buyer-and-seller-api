@@ -30,6 +30,7 @@ export class UserPrismaRepositoryImpl extends UserRepository {
           password: newUser.password ?? "",
           username: newUser.name,
           role: newUser.role,
+          phoneNumber: newUser.phoneNumber,
         },
       });
     } catch (error) {
@@ -64,6 +65,7 @@ export class UserPrismaRepositoryImpl extends UserRepository {
     return new UserEntity(user.username, user.role, {
       password: user.password,
       id: user.id,
+      phoneNumber: user.phoneNumber ?? "",
     });
   }
 
@@ -77,6 +79,7 @@ export class UserPrismaRepositoryImpl extends UserRepository {
     return new UserEntity(user.username, user.role, {
       password: user.password,
       id: user.id,
+      phoneNumber: user.phoneNumber ?? "",
     });
   }
 }

@@ -5,6 +5,7 @@ interface IUserCredentialDTO {
   username: string;
   userId: string;
   role: ROLE;
+  phoneNumber: string;
 }
 
 export const userCredentialDTO = (user: UserEntity) => {
@@ -12,5 +13,6 @@ export const userCredentialDTO = (user: UserEntity) => {
     userId: user.id,
     username: user.name,
     role: user.role,
+    phoneNumber: user.phoneNumber,
   } as IUserCredentialDTO;
 };

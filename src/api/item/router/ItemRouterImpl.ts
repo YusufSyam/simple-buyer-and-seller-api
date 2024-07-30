@@ -28,12 +28,6 @@ export class ItemRouterImpl extends BaseRouter {
       )
       .get(this.handler.getItems);
 
-    // // * student lend item
-    // this.router
-    //   .route(this.path + "/lent-items")
-    //   .post(this.authorizationMiddleware.authorize(), this.handler.postLentItem)
-    //   .get(this.authorizationMiddleware.authorize(), this.handler.getLentItems);
-
     // * delete item
     // * update item
     // * get item detail

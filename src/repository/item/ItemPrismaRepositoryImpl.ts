@@ -79,6 +79,7 @@ export class ItemPrismaRepositoryImpl extends ItemRepository {
           select: {
             id: true,
             username: true,
+            phoneNumber: true,
           },
         },
       },
@@ -97,7 +98,10 @@ export class ItemPrismaRepositoryImpl extends ItemRepository {
       authorId: item.authorId,
       category: item.category,
       price: Number(item.price),
-      author: new SellerEntity(item.author.username, { id: item.author.id }),
+      author: new SellerEntity(item.author.username, {
+        id: item.author.id,
+        phoneNumber: item.author.phoneNumber ?? "",
+      }),
     });
   }
 
