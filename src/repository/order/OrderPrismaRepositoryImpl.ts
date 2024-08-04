@@ -59,7 +59,16 @@ export class OrderPrismaRepositoryImpl extends OrderRepository {
         carts: {
           select: {
             id: true,
-            item: { select: { name: true } },
+            item: {
+              select: {
+                name: true,
+                id: true,
+                stock: true,
+                category: true,
+                thumbnail: true,
+                price: true,
+              },
+            },
             quantity: true,
           },
         },
@@ -74,12 +83,21 @@ export class OrderPrismaRepositoryImpl extends OrderRepository {
           id: o.id,
           orderStatusUpdated: Number(o.orderStatusUpdated),
           status: o.status,
-          buyer: new BuyerEntity(o.buyer.username, { id: o.buyer.id }),
+          buyer: new BuyerEntity(o.buyer.username, {
+            id: o.buyer.id,
+            phoneNumber: o.buyer.phoneNumber ?? "",
+          }),
           carts: o.carts.map((c) => {
             return new CartEntity({
               id: c.id,
               quantity: c.quantity,
-              item: new ItemEntity(c.item.name!),
+              item: new ItemEntity(c.item.name!, {
+                id: c.item.id,
+                category: c.item.category,
+                price: Number(c.item.price),
+                stock: c.item.stock,
+                thumbnail: c.item.thumbnail ?? "",
+              }),
             });
           }),
         });
@@ -101,7 +119,16 @@ export class OrderPrismaRepositoryImpl extends OrderRepository {
         carts: {
           select: {
             id: true,
-            item: { select: { name: true } },
+            item: {
+              select: {
+                name: true,
+                id: true,
+                stock: true,
+                category: true,
+                thumbnail: true,
+                price: true,
+              },
+            },
             quantity: true,
           },
         },
@@ -116,12 +143,21 @@ export class OrderPrismaRepositoryImpl extends OrderRepository {
           id: o.id,
           orderStatusUpdated: Number(o.orderStatusUpdated),
           status: o.status,
-          buyer: new BuyerEntity(o.buyer.username, { id: o.buyer.id }),
+          buyer: new BuyerEntity(o.buyer.username, {
+            id: o.buyer.id,
+            phoneNumber: o.buyer.phoneNumber ?? "",
+          }),
           carts: o.carts.map((c) => {
             return new CartEntity({
               id: c.id,
               quantity: c.quantity,
-              item: new ItemEntity(c.item.name!),
+              item: new ItemEntity(c.item.name!, {
+                id: c.item.id,
+                category: c.item.category,
+                price: Number(c.item.price),
+                stock: c.item.stock,
+                thumbnail: c.item.thumbnail ?? "",
+              }),
             });
           }),
         });
