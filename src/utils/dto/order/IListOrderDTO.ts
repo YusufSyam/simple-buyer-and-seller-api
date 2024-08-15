@@ -1,4 +1,4 @@
-import { PAYMENT_STATUS } from "@prisma/client";
+import { Category, PAYMENT_STATUS } from "@prisma/client";
 import { OrderEntity } from "../../../entity/order/OrderEntity";
 
 interface IListOrderDTO {
@@ -8,7 +8,14 @@ interface IListOrderDTO {
   orderStatusUpdateAt: number;
   carts: {
     id: string;
-    itemName: string;
+    item: {
+      id: string;
+      name: string;
+      category: Category;
+      stock: number;
+      thumbnail: string;
+      price: number;
+    };
     quantity: number;
   }[];
   buyer: {
@@ -27,7 +34,14 @@ export const ListOrderDTO = (order: OrderEntity) => {
     },
     carts: order.carts?.map((c) => ({
       id: c.id,
-      itemName: c.item?.name,
+      item: {
+        id: c.item?.id,
+        name: c.item?.name,
+        stock: c.item?.stock,
+        thumbnail: c.item?.thumbnail,
+        category: c.item?.category,
+        price: c.item?.price,
+      },
       quantity: c.quantity,
     })),
     description: order.description,
